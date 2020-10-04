@@ -1,7 +1,7 @@
 # read in the FCS file and do the pregating
 
 library(rjson)
-foldername = '/home/wangmk/UM/Biostatistics/CyTOF/data/20200909/'
+foldername = '/net/wonderland/home/wangmk/CyTOF/data/20200909'
 
 fcs_files = paste0(foldername, list.files(foldername))
 # match the detector name with marker names
@@ -17,6 +17,6 @@ fcs_raw <- read.flowSet(fcs_files, transformation = FALSE,
 
 gated_totaldata <- Reduce(function(...) merge(..., all = TRUE), fsApply(fcs_raw, pregating))
 
-gated_totaldata[, .(count = .N, liveprop = mean(live_proportion)), by = file]
+# gated_totaldata[, .(count = .N, liveprop = mean(live_proportion)), by = file]
 
-fwrite(gated_totaldata, "Combined_fcs.csv")
+fwrite(gated_totaldata, "/net/wonderland/home/wangmk/CyTOF/data/combined_fcs_20200909.csv")
