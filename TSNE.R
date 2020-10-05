@@ -10,22 +10,29 @@ library(ggplot2)
 cols <- c('file','CD66b', 'CD16', 'CD15', 'CD19', 'CD20', 'CD27', 'CD3', 'CD127', 'CD25',
           'CD4', 'CD8', 'CD56', 'CD123', 'CD11c', 'CD14', 'CD45RA', 'CCR7', 'CXCR3')
 
-combined_fcs <- fread('/net/wonderland/home/wangmk/CyTOF/data/combined_fcs.csv',
+combined_fcs <- fread('/net/wonderland/home/wangmk/CyTOF/data/combined_fcs_20200909.csv',
                       header = TRUE, select = cols)
 markers <- as.matrix(combined_fcs[,-"file", with=F])
+
+print("So far okay")
 
 # fit TSNE on the markers
 if (file.exists('/net/wonderland/home/wangmk/CyTOF/data/20200909tsne.rds')){
   tsne_result <- readRDS('/net/wonderland/home/wangmk/CyTOF/data/20200909tsne.rds')
 } else{
+  ptm <- proc.time()
   tsne_result <- Rtsne(markers)
+  cat(proc.time() - ptm)
   saveRDS(tsne_result, '/net/wonderland/home/wangmk/CyTOF/data/20200909tsne.rds')
 }
+
+print("So far okay")
 
 tsne_20200909 <- as.data.table(tsne_result$Y)
 
 setnames(tsne_20200909, c("V1", "V2"), c("TSNE1", "TSNE2"))
 
+combined_fcs <- cbind(combined_fcs, tsne_20200909)
 
 # Color the TSNE plots with marker intensity (CD4, CD8 and CD3)
 combined_fcs_CD4 <- combined_fcs[order(CD4)]
@@ -70,4 +77,4 @@ dev.off()
 
 
 # save the TSNE values
-fwrite(tsne_20200909, '/net/wonderland/home/wangmk/CyTOF/plots/20200909_combined_fcs_TSNE.csv')
+fwrite(combined_fcs, '/net/wonderland/home/wangmk/CyTOF/data/combined_fcs_20200909.csv')

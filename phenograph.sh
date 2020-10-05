@@ -4,9 +4,9 @@
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --ntasks-per-node=12
 #SBATCH --cpus-per-task=1
-#SBATCH --mem-per-cpu=3GB
+#SBATCH --mem-per-cpu=2GB
 #SBATCH --array=1000-12000:1000
-#SBATCH --time=02:00:00
+#SBATCH --time=01:00:00
 
 Rscript Phenograph.R
 

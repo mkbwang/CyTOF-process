@@ -1,7 +1,7 @@
 # read in the FCS file and do the pregating
 
 library(rjson)
-foldername = '/net/wonderland/home/wangmk/CyTOF/data/20200909'
+foldername = '/net/wonderland/home/wangmk/CyTOF/data/20200909/'
 
 fcs_files = paste0(foldername, list.files(foldername))
 # match the detector name with marker names
