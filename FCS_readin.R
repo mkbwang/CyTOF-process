@@ -1,9 +1,29 @@
 # read in the FCS file and do the pregating
 
 library(rjson)
-foldername = '/net/wonderland/home/wangmk/CyTOF/data/20200909/'
+library(optparse)
 
-fcs_files = paste0(foldername, list.files(foldername))
+# parse in arguments
+
+option_list = list(
+  make_option(c("-f", "--folder"), type="character", default=NULL, 
+              help="folder with fcs files", metavar="character"),
+  make_option(c("-o", "--out"), type="character", default="out.txt", 
+              help="output csv file name [default= %default]", metavar="character")
+);
+
+opt_parser = OptionParser(option_list=option_list)
+opt = parse_args(opt_parser)
+
+if (is.null(opt$folder)){
+  print_help(opt_parser)
+  stop("At least one argument must be supplied (input file).n", call.=FALSE)
+}
+
+foldername = opt$folder
+
+fcs_files = paste0(foldername, list.files(foldername, pattern = "\\.fcs$"))
+
 # match the detector name with marker names
 detector_marker_match = unlist(fromJSON(file="detector_marker_match.json"))
 
@@ -19,4 +39,4 @@ gated_totaldata <- Reduce(function(...) merge(..., all = TRUE), fsApply(fcs_raw,
 
 # gated_totaldata[, .(count = .N, liveprop = mean(live_proportion)), by = file]
 
-fwrite(gated_totaldata, "/net/wonderland/home/wangmk/CyTOF/data/combined_fcs_20200909.csv")
+fwrite(gated_totaldata, file.path(foldername, opt$out))

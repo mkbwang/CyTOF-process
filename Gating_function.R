@@ -30,12 +30,12 @@ pregating = function(cytoframe){
   cytomat <- cytomat[Width > width_avg - 1.5*width_sdv & Width < width_avg + 1.5*width_sdv,]
   
   # eventlength filtering
-  cytomat <- cytomat[Event_length > 20 & Event_length < 60,]
+  cytomat <- cytomat[Event_length > 17 & Event_length < 60,]
   
   # DNA1 filtering
   DNA1_mean <- mean(cytomat[, DNA1])
   DNA1_sdv <- sd(cytomat[, DNA1])
-  cytomat <- cytomat[DNA1 > DNA1_mean-DNA1_sdv & DNA1 < DNA1_mean + 1.5*DNA1_sdv, ]
+  cytomat <- cytomat[DNA1 > DNA1_mean-1.5*DNA1_sdv & DNA1 < DNA1_mean + 1.5*DNA1_sdv, ]
   
   # DNA2 filtering
   DNA2_mean <- mean(cytomat[, DNA2])
@@ -47,7 +47,7 @@ pregating = function(cytoframe){
   cytomat <- cytomat[Live_Dead<100, ]
   
   # CD45 filtering
-  cytomat <- cytomat[CD45 > 10, ]
+  cytomat <- cytomat[CD45 > 50, ]
   
   cytomat[,file:=filename]
   cytomat[,live_proportion:=live_proportion]
