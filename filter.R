@@ -1,10 +1,15 @@
+# Filtering
 
-# Gating function
-
-pregating = function(cytoframe){
+single_cell_filtering = function(cytoframe){
+  
+  # raw FCS file filtering
   filename <- identifier(cytoframe)
   cytomat <- as.data.table(exprs(cytoframe))
+  
+  # match the detector name with marker names
+  detector_marker_match = unlist(fromJSON(file="detector_marker_match.json"))
   colnames(cytomat) <- detector_marker_match[colnames(cytomat)]
+  
   # filter away the beads
   cytomat <- cytomat[EQ4_beads < 10]
   

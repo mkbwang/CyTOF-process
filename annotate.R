@@ -1,11 +1,9 @@
-# SPADE output analysis
 
-newoutput = read.FCS("mockout/testout.fcs.density.fcs.cluster.fcs")
-node_characteristics <- read.table("mockout/clusters.table", header=TRUE)
-node_bin_characteristics <- (node_characteristics > 1.5)
 
-judgement <- function(midexpression){
-  expr_bin <- midexpression > 1
+annotate <- function(medexpression){
+  # rule based annotation
+  
+  expr_bin <- medexpression > 1
   
   celltypes <- c("Neutrophils", "Naive B", "B Memory", "Plasmablast", 
                  "NK.CD16+", "NK.CD16-", "Classical Monocytes", "Non-classical Monocytes",
@@ -62,7 +60,7 @@ judgement <- function(midexpression){
   toggle[19] <- expr_bin['CD3'] & expr_bin['CD56']
   
   labels <- paste(celltypes[which(toggle)], collapse = "/")
+  if (labels == "") labels <- "Unidentified"
+  
   labels
 }
-
-cluster_category <- apply(node_characteristics, 1, judgement)
