@@ -1,0 +1,31 @@
+Package: CyTOFprocess
+Title: A package to process CyTOF data for Umich Taubman Project
+Version: 0.1.0
+Authors@R: 
+    person(given = "Mukai",
+           family = "Wang",
+           role = c("aut", "cre"),
+           email = "wangmk@umich.edu")
+Description: The functions in this package is used to process fcs files and generate summary statistics.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Depends:
+    R (>= 3.5.0),
+    Rclusterpp,
+    igraph
+biocViews:
+Imports:
+    Biobase,
+    flowCore,
+    data.table,
+    rjson,
+    dplyr,
+    methods,
+    utils,
+    tidyr,
+    spade
+Remotes: 
+    nolanlab/Rclusterpp,
+    nolanlab/spade
+RoxygenNote: 6.1.1

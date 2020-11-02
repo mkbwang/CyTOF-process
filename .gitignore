@@ -1,3 +1,13 @@
 *.csv
 .Rhistory
-
+test_data/mockout
+testout*
+bootstrap_sample.R
+Dockerfile
+install_packages.R
+Phenograph.R
+phenograph.sh
+TSNE.R
+TSNE.sh
+FCS_combined_summary.R
+.Rproj.user
