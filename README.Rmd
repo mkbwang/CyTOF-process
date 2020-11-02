@@ -1,0 +1,45 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# CyTOFprocess
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of CyTOFprocess is to process mass cytometry data in raw fcs format. Currently we have `QC_summary` function that takes in a folder name and then process all the fcs files in the folder to generate a cell count summary for each patient.
+
+## Installation
+
+First install using `install_github` from `devtools` package, then try the script below.
+
+```{r, message=FALSE}
+library(CyTOFprocess)
+```
+
+## Example
+
+I have prepared a small example using three mock fcs files. Use the following code to see the result
+
+```{r example, message = FALSE}
+library(CyTOFprocess)
+# generate the summary
+knitr::kable(QC_summary(folder = system.file("extdata", package = "CyTOFprocess")))
+# remove the output files
+unlink(system.file("extdata", "combined.fcs", package = "CyTOFprocess"))
+unlink(system.file("extdata", "combined_index.txt", package = "CyTOFprocess"))
+```
+
+
+The package is still under development by Mukai Wang.

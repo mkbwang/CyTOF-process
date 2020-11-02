@@ -1,11 +1,19 @@
 
 
+#' Based on protein expressions, assign each cell to their category. This is achieved through
+#' a predefined rule.
+#'
+#' @param medexpression
+#' The expression profile of each cluster identified by spade
+#'
+#' @return
+#' A vector of annotations for each cell
 annotate <- function(medexpression){
   # rule based annotation
-  
+
   expr_bin <- medexpression > 1
-  
-  celltypes <- c("Neutrophils", "Naive B", "B Memory", "Plasmablast", 
+
+  celltypes <- c("Neutrophils", "Naive B", "B Memory", "Plasmablast",
                  "NK.CD16+", "NK.CD16-", "Classical Monocytes", "Non-classical Monocytes",
                  "pDC", "mDC", "Naive CD4", "CD4.CM", "CD4.EM", "CD4.TEM", "Naive CD8",
                  "CD8.CM", "CD8.EM", "CD8.TEM", "NKT")
@@ -58,9 +66,9 @@ annotate <- function(medexpression){
   toggle[18] <- tcd8cell & expr_bin['CD45RA'] & !expr_bin['CCR7']
   # NKT
   toggle[19] <- expr_bin['CD3'] & expr_bin['CD56']
-  
+
   labels <- paste(celltypes[which(toggle)], collapse = "/")
   if (labels == "") labels <- "Unidentified"
-  
+
   labels
 }
